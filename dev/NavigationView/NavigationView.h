@@ -14,7 +14,6 @@ struct bringintoview_event_revoker;
 #include "NavigationViewHelper.h"
 #include "NavigationView.properties.h"
 #include "NavigationViewModel.h"
-#include "NavigationViewNode.h"
 
 enum class TopNavigationViewLayoutState
 {
@@ -350,11 +349,6 @@ private:
 
     NavigationViewModel m_viewModel{ this };
     tracker_ref<winrt::NavigationViewItem> m_lastExpandedItem{ this };
-
-    std::vector<NavigationViewNode> m_nodeVector;
-    void UpdateNodeTree();
-
-    //tracker_ref<std::vector<NavigationViewNode>> m_nodeVector{ this };
 
     bool m_appliedTemplate{ false };
 

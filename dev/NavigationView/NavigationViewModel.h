@@ -2,6 +2,7 @@
 #include <Vector.h>
 #include "NavigationViewItem.h"
 #include "TopNavigationViewDataProvider.h"
+#include "NavigationViewNode.h"
 
 class NavigationViewModel
 {
@@ -18,6 +19,7 @@ public:
 
     winrt::IObservableVector<winrt::IInspectable> GetPrimaryItems();
 
+    void UpdateNodeTree(winrt::IInspectable const& dataSource);
     void SetDataSource(winrt::IInspectable rawDataSource);
 
     void RegisterItemExpandEventToSelf(winrt::NavigationViewItem const& item, winrt::NavigationViewList const& list);
@@ -31,6 +33,7 @@ private:
     winrt::weak_ref<winrt::NavigationView> m_navigationView{ nullptr };
 
     // Vectors keeping track of displayed items
+    std::vector<NavigationViewNode> m_nodeVector;
 	winrt::IObservableVector<winrt::IInspectable> m_primaryItems{ nullptr };
 	winrt::IObservableVector<winrt::IInspectable> m_popupItems{ nullptr };
 
@@ -38,8 +41,8 @@ private:
     std::vector<winrt::event_token> m_isExpandedChangedEventTokenVector;
 
     void UpdatePrimaryItems();
-    void NavigationViewModel::InsertAt(uint32_t index, winrt::IInspectable const& value);
-    void NavigationViewModel::RemoveItemAndDescendantsFromView(winrt::NavigationViewItemBase const& value, int const index);
+    void InsertAt(uint32_t index, winrt::IInspectable const& value);
+    void RemoveItemAndDescendantsFromView(winrt::NavigationViewItemBase const& value, int const index);
 
     tracker_ref<winrt::ItemsSourceView> m_dataSource;
     // If the raw datasource is the same, we don't need to create new winrt::ItemsSourceView object.

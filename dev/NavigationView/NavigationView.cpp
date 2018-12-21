@@ -3100,17 +3100,16 @@ void NavigationView::UpdatePaneTitleMargins()
 
 void NavigationView::UpdateLeftNavListViewItemSource(const winrt::IInspectable& items)
 {
-    if (m_topDataProvider.ShouldChangeDataSource(items))
-    {
-        // unbinding Data from ListView
-        UpdateListViewItemsSource(m_topNavListView.get(), nullptr);
-        UpdateListViewItemsSource(m_topNavListOverflowView.get(), nullptr);
+    // unbinding Data from ListView
+    UpdateListViewItemsSource(m_topNavListView.get(), nullptr);
+    UpdateListViewItemsSource(m_topNavListOverflowView.get(), nullptr);
 
-        // Change data source and setup vectors
-        m_viewModel.SetDataSource(items);
+    // Change data source and setup vectors
+    m_viewModel.UpdateNodeTree(items);
+    //m_viewModel.SetDataSource(items);
 
-        UpdateListViewItemsSource(m_leftNavListView.get(), m_viewModel.GetPrimaryItems());
-    }
+    UpdateListViewItemsSource(m_leftNavListView.get(), m_viewModel.GetPrimaryItems());
+
 }
 
 void NavigationView::UpdateTopNavListViewItemSource(const winrt::IInspectable& items)
@@ -3151,8 +3150,6 @@ void NavigationView::UpdateListViewItemSource()
         dataSource = MenuItems();
     }
 
-    UpdateNodeTree();
-
     // Always unset the data source first from old ListView, then set data source for new ListView.
     if (IsTopNavigationView())
     {
@@ -3170,11 +3167,6 @@ void NavigationView::UpdateListViewItemSource()
         InvalidateTopNavPrimaryLayout();
         UpdateSelectedItem();
     }
-}
-
-void NavigationView::UpdateNodeTree()
-{
-
 }
 
 void NavigationView::UpdateListViewItemsSource(const winrt::ListView& listView, 

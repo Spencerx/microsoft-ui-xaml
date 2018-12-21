@@ -93,6 +93,20 @@ void NavigationViewModel::ChangeDataSource(winrt::ItemsSourceView newValue)
     }
 }
 
+void NavigationViewModel::UpdateNodeTree(winrt::IInspectable const& dataSource)
+{
+    //TODO: IMPLEMENT NODE TREE CLEARING LOGIC
+
+    auto dataSourceView = winrt::ItemsSourceView(dataSource);
+
+    for (int i = 0; i < dataSourceView.Count(); i++)
+    {
+        //auto navNode = new NavigationViewNode();
+        //navNode->Content(dataSourceView.GetAt(i));
+        //m_nodeVector.push_back(*navNode);
+    }
+}
+
 
 //void NavigationViewModel::setTopNavigationViewDataProvider(const TopNavigationViewDataProvider& topNavigationViewDataProvider) {
 //	m_topDataProvider = winrt::make_weak(topNavigationViewDataProvider);
